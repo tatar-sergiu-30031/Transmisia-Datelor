@@ -1,4 +1,3 @@
-
 function sum(n){
     if(typeof n === 'undefined') return 'n is undefined';
     if(typeof n === 'string') return 'not a number';
