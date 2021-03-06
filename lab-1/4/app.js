@@ -1,7 +1,9 @@
 function getFibbonaci(n) {
     let n1 = 0, n2 = 1, next;
-    if (typeof n != 'number') return 'not allowed';
-    if (n<1 || n > 10) return 'not allowed';
+    if (typeof n != 'number')
+     return 'not allowed';
+    if (n<1 || n > 10)
+     return 'not allowed';
     console.log(n2);
 
     if (n === 2){
@@ -18,3 +20,6 @@ function getFibbonaci(n) {
         }
     }
 }
+console.log(getFibonacci(2));
+console.log(getFibonacci(5));
+console.log(getFibonacci('Hello'));
