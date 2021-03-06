@@ -1,4 +1,4 @@
-function getFibbonaci(n) {
+function getFibonacci(n) {
     let n1 = 0, n2 = 1, next;
     if (typeof n != 'number')
      return 'not allowed';
