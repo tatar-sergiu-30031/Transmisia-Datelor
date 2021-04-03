@@ -3,7 +3,8 @@ var app = new Vue({
   data: {
     dataBits: [],
     status: '',
-    numberOfDataBits: 4
+    numberOfDataBits: 4,
+	message: '',
   },
   created: function () {
     this.initDataBits(4);
@@ -31,28 +32,63 @@ var app = new Vue({
       }
     },
     encode: function (bits) {
-      // This function must be changed to allow any number of data bits
-      // Right now it only works for 4 data bits
-      console.log(this.numberOfDataBits);
-      var c4 = this.parity(
-        parseInt(bits[1].data) + parseInt(bits[2].data) + parseInt(bits[3].data)
-      );
-      var c2 = this.parity(
-        parseInt(bits[0].data) + parseInt(bits[2].data) + parseInt(bits[3].data)
-      );
-      var c1 = this.parity(
-        parseInt(bits[0].data) + parseInt(bits[1].data) + parseInt(bits[3].data)
-      );
-      console.log('Control bits: ' + c1 + ',' + c2 + ',' + c4);
-      return [
-        c1,
-        c2,
-        parseInt(bits[0].data),
-        c4,
-        parseInt(bits[1].data),
-        parseInt(bits[2].data),
-        parseInt(bits[3].data)
-      ];
+	  var returnFunction = [];
+	  if(this.numberOfDataBits==4){
+		console.log(this.numberOfDataBits);
+		var c4 = this.parity(
+			parseInt(bits[1].data) + parseInt(bits[2].data) + parseInt(bits[3].data)
+		);
+		var c2 = this.parity(
+			parseInt(bits[0].data) + parseInt(bits[2].data) + parseInt(bits[3].data)
+		);
+		var c1 = this.parity(
+			parseInt(bits[0].data) + parseInt(bits[1].data) + parseInt(bits[3].data)
+		);
+		this.message = 'Control bits: ' + c1 + ',' + c2 + ',' + c4 + ' Hamming code: ' + c1 + ',' + c2 + ',' + parseInt(bits[0].data) + ',' + c4 + ',' +
+			parseInt(bits[1].data) + ',' + parseInt(bits[2].data) + ',' + parseInt(bits[3].data);
+		returnFunction = [
+			c1,
+			c2,
+			parseInt(bits[0].data),
+			c4,
+			parseInt(bits[1].data),
+			parseInt(bits[2].data),
+			parseInt(bits[3].data)
+		];
+	  }
+	  if(this.numberOfDataBits==8){
+		  console.log(this.numberOfDataBits);
+		var c8 = this.parity(
+			parseInt(bits[4].data) + parseInt(bits[5].data) + parseInt(bits[6].data) + parseInt(bits[7].data)
+		);
+		var c4 = this.parity(
+			parseInt(bits[1].data) + parseInt(bits[2].data) + parseInt(bits[3].data) + parseInt(bits[7].data)
+		);
+		var c2 = this.parity(
+			parseInt(bits[0].data) + parseInt(bits[2].data) + parseInt(bits[3].data) + parseInt(bits[5].data) + parseInt(bits[6].data)
+		);
+		var c1 = this.parity(
+			parseInt(bits[0].data) + parseInt(bits[1].data) + parseInt(bits[3].data) + parseInt(bits[4].data) + parseInt(bits[6].data)
+		);
+		this.message = 'Control bits: ' + c1 + ',' + c2 + ',' + c4 + ',' + c8 + ' Hamming code: ' + c1 + ',' + c2 + ',' + parseInt(bits[0].data) + ',' + c4 + ',' +
+			parseInt(bits[1].data) + ',' + parseInt(bits[2].data) + ',' + parseInt(bits[3].data)  + ',' + c8 + ',' +
+			parseInt(bits[4].data) + ',' + parseInt(bits[5].data) + ',' + parseInt(bits[6].data) + ',' + parseInt(bits[7].data);
+		returnFunction = [
+			c1,
+			c2,
+			parseInt(bits[0].data),
+			c4,
+			parseInt(bits[1].data),
+			parseInt(bits[2].data),
+			parseInt(bits[3].data),
+			c8,
+			parseInt(bits[4].data),
+			parseInt(bits[5].data),
+			parseInt(bits[6].data),
+			parseInt(bits[7].data)
+		];
+	  }
+      return returnFunction;
     },
     parity: function (number) {
       return number % 2;
